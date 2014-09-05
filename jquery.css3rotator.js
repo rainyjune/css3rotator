@@ -3,7 +3,9 @@
     var defaults = {
       container: '.rotator-wrapper',
       transitionDuration: 1000,
-      slideWidth: 800
+      slideWidth: 800,
+      transitonInterval: 3000,
+      pauseAfterTransition: true
     }
 
     var mergedOptions = $.extend(defaults, options);
@@ -34,7 +36,6 @@
       value = -value + "px";
       slideContainer.css({ "transform": "translateX(" + value + ")" });
 
-      //slideContainer.css({ "transition-duration": mergedOptions.transitionDuration });
       if (x === 0) {
         setTimeout(function () {
           console.log("set duration2");
@@ -46,8 +47,6 @@
 
     function doIt(e) {
       pageIndex++;
-
-      //console.log(slideContainer.css());
       if (pageIndex > slideCount - 1) {
         pageIndex = 0;
         console.log("set duraion to zero");
@@ -56,7 +55,13 @@
         console.log("set duration");
         slideContainer.css({ "transition-duration": mergedOptions.transitionDuration });
       }
-      roll(pageIndex);
+
+      //if (mergedOptions.pauseAfterTransition) {
+        setTimeout(function () {
+          roll(pageIndex);
+        }, mergedOptions.pauseAfterTransition ? mergedOptions.transitonInterval : 0);
+      //}
+      //roll(pageIndex);
       
     }
 
