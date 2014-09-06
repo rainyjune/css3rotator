@@ -1,0 +1,32 @@
+﻿.css2rotator {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid blue;
+  margin: 0 auto;
+  height: 600px;
+}
+.css2rotator .container {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.css2rotator ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  /* Add height*/
+  height: 500px;
+}
+
+.css2rotator .container li {
+  float: left;
+  height: 100%;
+}
+
+.buttons {
+  position: absolute;
+  left: 0;
+  top: 500px;
+}
