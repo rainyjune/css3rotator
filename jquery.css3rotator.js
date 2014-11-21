@@ -62,13 +62,9 @@
         }, mergedOptions.pauseAfterTransition ? mergedOptions.transitonInterval : 0);
       //}
       //roll(pageIndex);
-      
     }
 
     function bindEvents() {
-
-      
-      
       //document.addEventListener('webkitTransitionEnd', doIt, false);
       document.addEventListener('transitionend', doIt, false);
       //document.addEventListener('MSTransitionEnd', doIt, false);
