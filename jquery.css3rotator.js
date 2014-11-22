@@ -3,17 +3,17 @@
     var defaults = {
       container: '.rotator-wrapper',
       transitionDuration: 1000,
-      slideWidth: 800,
+      slideWidth: element.width(),
       transitonInterval: 3000,
       pauseAfterTransition: true
     };
-
     var mergedOptions = $.extend(defaults, options);
 
     var transitionEndEventName = getTransitionEndEventName();
     var slideCount = 0,
       pageIndex = 0,
-      slideContainer = null;
+      slideContainer = null,
+      slides = null;
 
     var timer = null;
 
@@ -21,25 +21,49 @@
 
     function init() {
       slideContainer = element.find(mergedOptions.container);
-      slideCount = slideContainer.children().length;
+      slides = slideContainer.children();
+      slideCount = slides.length;
       slideContainer.width(mergedOptions.slideWidth * slideCount);
+      //debugger;
+      slides.width(element.width());
       bindEvents();
 
-      slideContainer.css({"transition-duration": mergedOptions.transitionDuration });
+      slideContainer.css({
+        "-webkit-transition-duration": mergedOptions.transitionDuration,
+        "-moz-transition-duration": mergedOptions.transitionDuration,
+        "-o-transition-duration": mergedOptions.transitionDuration,
+        "transition-duration": mergedOptions.transitionDuration
+      });
 
-      slideContainer.css({ "transform": "translateX(-800px)" });
+      slideContainer.css({
+        "-webkit-transform:": "translateX(-" + mergedOptions.slideWidth + "px)",
+        "-moz-transform:": "translateX(-" + mergedOptions.slideWidth + "px)",
+        "-o-transform:": "translateX(-" + mergedOptions.slideWidth + "px)",
+        "transform": "translateX(-" + mergedOptions.slideWidth + "px)"
+      });
+      pageIndex++;
     }
 
     function roll(pageIndex) {
       console.log("Dot it:", pageIndex);
       var value = 800 * pageIndex;
       value = -value + "px";
-      slideContainer.css({ "transform": "translateX(" + value + ")" });
+      slideContainer.css({
+        "-webkit-transform": "translateX(" + value + ")",
+        "-moz-transform": "translateX(" + value + ")",
+        "-o-transform": "translateX(" + value + ")",
+        "transform": "translateX(" + value + ")"
+      });
 
       if (pageIndex === 0) {
         setTimeout(function () {
           console.log("set duration2");
-          slideContainer.css({ "transition-duration": mergedOptions.transitionDuration });
+          slideContainer.css({
+            "-webkit-transition-duration": mergedOptions.transitionDuration,
+            "-moz-transition-duration": mergedOptions.transitionDuration,
+            "-o-transition-duration": mergedOptions.transitionDuration,
+            "transition-duration": mergedOptions.transitionDuration
+          });
           transitionEndEventHandler();
         }, 3000);
       }
@@ -50,10 +74,20 @@
       if (pageIndex > slideCount - 1) {
         pageIndex = 0;
         console.log("set duraion to zero");
-        slideContainer.css({ "transition-duration": "0s" });
+        slideContainer.css({
+          "-webkit-transition-duration": "0s",
+          "-moz-transition-duration": "0s",
+          "-o-transition-duration": "0s",
+          "transition-duration": "0s"
+        });
       } else {
         console.log("set duration");
-        slideContainer.css({ "transition-duration": mergedOptions.transitionDuration });
+        slideContainer.css({
+          "-webkit-transition-duration": mergedOptions.transitionDuration,
+          "-moz-transition-duration": mergedOptions.transitionDuration,
+          "-o-transition-duration": mergedOptions.transitionDuration,
+          "transition-duration": mergedOptions.transitionDuration
+        });
       }
 
       setTimeout(function () {
