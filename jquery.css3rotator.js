@@ -46,7 +46,7 @@
 
     function roll(pageIndex) {
       console.log("Dot it:", pageIndex);
-      var value = 800 * pageIndex;
+      var value = mergedOptions.slideWidth * pageIndex;
       value = -value + "px";
       slideContainer.css({
         "-webkit-transform": "translateX(" + value + ")",
