@@ -1,17 +1,16 @@
-﻿; (function ($) {
-  $.fn.css3Rotator = function (options) {
+﻿(function ($) {
+  function Css3Rotator(element, options) {
     var defaults = {
       container: '.rotator-wrapper',
       transitionDuration: 1000,
       slideWidth: 800,
       transitonInterval: 3000,
       pauseAfterTransition: true
-    }
+    };
 
     var mergedOptions = $.extend(defaults, options);
 
     var slideCount = 0,
-      element = $(this),
       pageIndex = 0,
       slideContainer = null;
 
@@ -62,8 +61,13 @@
     }
 
     function bindEvents() {
-      document.addEventListener('transitionend', doIt, false);
+      slideContainer.on('transitionend', doIt);
     }
-    return $(this);
+  }
+  
+  $.fn.css3Rotator = function (options) {
+    return this.each(function(index, item){
+      var rotatorObj = new Css3Rotator($(item), options);
+    });
   };
 })(jQuery);
