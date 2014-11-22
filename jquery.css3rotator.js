@@ -65,7 +65,7 @@
             "transition-duration": mergedOptions.transitionDuration
           });
           transitionEndEventHandler();
-        }, 3000);
+        }, mergedOptions.transitonInterval);
       }
     }
 
