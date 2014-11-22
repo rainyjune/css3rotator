@@ -30,13 +30,13 @@
       slideContainer.css({ "transform": "translateX(-800px)" });
     }
 
-    function roll(x) {
-      console.log("Dot it:", x);
-      var value = 800 * x;
+    function roll(pageIndex) {
+      console.log("Dot it:", pageIndex);
+      var value = 800 * pageIndex;
       value = -value + "px";
       slideContainer.css({ "transform": "translateX(" + value + ")" });
 
-      if (x === 0) {
+      if (pageIndex === 0) {
         setTimeout(function () {
           console.log("set duration2");
           slideContainer.css({ "transition-duration": mergedOptions.transitionDuration });
