@@ -10,6 +10,7 @@
 
     var mergedOptions = $.extend(defaults, options);
 
+    var transitionEndEventName = getTransitionEndEventName();
     var slideCount = 0,
       pageIndex = 0,
       slideContainer = null;
@@ -65,7 +66,29 @@
     }
   }
   
+  function getTransitionEndEventName() {
+    var i,
+      undefined,
+      el = document.createElement('div'),
+      transitions = {
+        'transition':'transitionend',
+        'OTransition':'otransitionend',  // oTransitionEnd in very old Opera
+        'MozTransition':'transitionend',
+        'WebkitTransition':'webkitTransitionEnd'
+      };
+    
+    for (i in transitions) {
+      if (transitions.hasOwnProperty(i) && el.style[i] !== undefined) {
+        return transitions[i];
+      }
+    }
+    
+    //TODO: throw 'TransitionEnd event is not supported in this browser';
+    return '';
+  }
+  
   $.fn.css3Rotator = function (options) {
+    // Using the each() method to loop through the elements
     return this.each(function(index, item){
       var rotatorObj = new Css3Rotator($(item), options);
     });
