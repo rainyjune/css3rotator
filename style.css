@@ -1,4 +1,4 @@
-﻿#rotator {
+﻿#rotator, #rotator2 {
   width: 800px;
   height: 600px;
   border: 1px solid blue;
@@ -6,19 +6,12 @@
   overflow: hidden;
 }
 
-#rotator ul {
-  height: 100%;
-  width: 4800px;
-  /*overflow: hidden;*/
-  -moz-transition-duration: 1s;
-  -o-transition-duration: 1s;
-  -webkit-transition-duration: 1s;
-  transition-duration: 1s;
+#rotator ul,
+#rotator2 ul {
+  
 }
 
-#rotator ul li {
-  float: left;
-  height: 598px;
-  border: 1px solid green;
-  width: 798px;
+#rotator ul li,
+#rotator2 ul li {
+  outline: 1px solid green;
 }
