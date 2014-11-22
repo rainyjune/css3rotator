@@ -40,12 +40,12 @@
         setTimeout(function () {
           console.log("set duration2");
           slideContainer.css({ "transition-duration": mergedOptions.transitionDuration });
-          doIt();
+          transitionEndEventHandler();
         }, 3000);
       }
     }
 
-    function doIt(e) {
+    function transitionEndEventHandler(e) {
       pageIndex++;
       if (pageIndex > slideCount - 1) {
         pageIndex = 0;
@@ -56,13 +56,13 @@
         slideContainer.css({ "transition-duration": mergedOptions.transitionDuration });
       }
 
-        setTimeout(function () {
-          roll(pageIndex);
-        }, mergedOptions.pauseAfterTransition ? mergedOptions.transitonInterval : 0);
+      setTimeout(function () {
+        roll(pageIndex);
+      }, mergedOptions.pauseAfterTransition ? mergedOptions.transitonInterval : 0);
     }
 
     function bindEvents() {
-      slideContainer.on('transitionend', doIt);
+      slideContainer.on(transitionEndEventName, transitionEndEventHandler);
     }
   }
   
