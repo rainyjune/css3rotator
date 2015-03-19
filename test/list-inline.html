@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+/* Reset */
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* App */
+.sliderViewport {
+  width: 200px;
+  height: 30px;
+  overflow: hidden;
+}
+
+.sliderViewport ul,
+.sliderViewport li {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.sliderViewport ul {
+  width: 1500%;
+}
+
+.sliderViewport ul.flexbox {
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+.sliderViewport li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.sliderViewport ul.flexbox li {
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+/* Page */
+ul {
+  background-color: gray;
+}
+li {
+  background-color: green;
+  border: 1px solid red;
+}
+      
+      
+    </style>
+  </head>
+  <body>
+    <div class="sliderViewport">
+      <ul class="flexbox">
+        <li>Item one
+        <li>Item two
+        <li>Item three
+        <li>Item four
+        <li>Item five
+        <li>Item six
+        <li>Item seven
+        <li>Item eight
+        <li>Item nine
+        <li>Item ten
+        <li>Item eleven
+        <li>Item twelve
+        <li>Item thirteen
+        <li>Item forteen
+        <li>Item fifteen
+      </ul>
+    </div>
+  </body>
+</html>
