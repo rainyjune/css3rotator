@@ -96,6 +96,7 @@
       slideContainer.addClass("notransition");// Disable transition
       setTimeout(function(){
         setTranslateXValue(); 
+        updateIndicatorStatus();
         // Resume transition after the orientation change event.
         setTimeout(function(){
           slideContainer.removeClass("notransition"); // Enable transition
