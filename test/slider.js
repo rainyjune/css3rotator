@@ -96,6 +96,14 @@
     function bindEvents() {
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
       $(window).on("orientationchange", handleOrientationChange);
+      $(element).on("swipeLeftMy", function(e) {
+        console.log("swipeLeft:", e);
+        next();
+      });
+      $(element).on("swipeRightMy", function(e) {
+        console.log("swipeRight:", e);
+        prev();
+      });
     }
     
     function handleOrientationChange() {
