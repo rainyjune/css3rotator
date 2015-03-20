@@ -27,6 +27,7 @@
       slideCount = slides.length;
       slideContainer.width(slideCount + "00%");
       setTransitionDuration();
+      addIndicator();
       bindEvents();
       autoPlay();
     }
@@ -109,6 +110,16 @@
         "-o-transition-duration": mergedOptions.transitionDuration,
         "transition-duration": mergedOptions.transitionDuration
       });
+    }
+    
+    function addIndicator() {
+      var domStr = "<strong class='indicator'>";
+      for (var i = 0; i < slideCount; i++) {
+        domStr += "<span></span>";
+      }
+      domStr += "</strong>";
+      element.append(domStr);
+      element.find('.indicator').children().eq(0).addClass("current");
     }
     
   }
