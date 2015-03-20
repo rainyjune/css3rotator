@@ -26,11 +26,13 @@
       slideContainer.addClass("rotatorWrapper").addClass("flex-it");
       slides = slideContainer.children();
       slideCount = slides.length;
-      slideContainer.width(slideCount + "00%");
-      setTransitionDuration();
+      slideContainer.width(slideCount + "00%");      
       addIndicator();
       bindEvents();
-      autoPlay();
+      setTimeout(function(){
+        setTransitionDuration();
+        autoPlay();
+      }, 0);
     }
     
     function prev() {
