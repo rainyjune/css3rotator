@@ -4,7 +4,7 @@
       container: '.rotatorWrapper',
       transitionDuration: '5s',
       slideWidth: element.width(), /* TODO  */
-      transitonInterval: 2000,
+      transitonInterval: '2s',
       pauseAfterTransition: true,
       autoPlay: true
     };
@@ -15,7 +15,7 @@
         pageIndex = 0,
         slideContainer = null,
         slides = null,
-        indicator = null,
+        indicators = null,
         timer = null;
 
     init();
@@ -31,6 +31,9 @@
       bindEvents();
       setTimeout(function(){
         setTransitionDuration();
+        if (mergedOptions.autoPlay) {
+          setTransitionDelay();
+        }
         autoPlay();
       }, 0);
     }
@@ -50,9 +53,7 @@
     
     function autoPlay() {
       if (mergedOptions.autoPlay) {
-        setTimeout(function () {
-          next();
-        }, mergedOptions.pauseAfterTransition ? mergedOptions.transitonInterval : 0);
+        next();
       }
     }
     
@@ -114,6 +115,15 @@
         "-moz-transition-duration": mergedOptions.transitionDuration,
         "-o-transition-duration": mergedOptions.transitionDuration,
         "transition-duration": mergedOptions.transitionDuration
+      });
+    }
+    
+    function setTransitionDelay() {
+      slideContainer.css({
+        "-webkit-transition-delay": mergedOptions.transitonInterval,
+        "-moz-transition-delay": mergedOptions.transitonInterval,
+        "-o-transition-delay": mergedOptions.transitonInterval,
+        "transition-delay": mergedOptions.transitonInterval
       });
     }
     
