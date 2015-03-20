@@ -15,6 +15,7 @@
         pageIndex = 0,
         slideContainer = null,
         slides = null,
+        indicator = null,
         timer = null;
 
     init();
@@ -81,6 +82,7 @@
     }
 
     function transitionEndEventHandler() {
+      updateIndicatorStatus();
       autoPlay();
       return false;
     }
@@ -119,7 +121,13 @@
       }
       domStr += "</strong>";
       element.append(domStr);
-      element.find('.indicator').children().eq(0).addClass("current");
+      indicators = element.find('.indicator').children();
+      indicators.eq(0).addClass("current");
+    }
+    
+    function updateIndicatorStatus() {
+      indicators.removeClass("current");
+      indicators.eq(pageIndex).addClass("current");
     }
     
   }
