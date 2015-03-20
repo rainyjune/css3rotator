@@ -1,4 +1,7 @@
-﻿(function ($) {
+﻿(function(factory){
+  var $ = (typeof Zepto !== "undefined") ? Zepto : jQuery;
+  factory($);
+})(function ($) {
   function Css3Rotator(element, options) {
     var defaults = {
       container: '.rotatorWrapper',
@@ -171,4 +174,4 @@
       var rotatorObj = new Css3Rotator($(item), options);
     });
   };
-})(jQuery);
+});
