@@ -16,6 +16,9 @@ ul, li {
   overflow: hidden;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  
+  -ms-touch-action: none; /* !Imporant for IE 10+. */
+  touch-action: none;
 }
 
 .rotatorWrapper {
