@@ -19,6 +19,8 @@ ul, li {
   
   -ms-touch-action: none; /* !Imporant for IE 10+. */
   touch-action: none;
+
+  -webkit-user-select: none;
 }
 
 .rotatorWrapper {
@@ -75,8 +77,14 @@ ul, li {
   position: relative; /* Set this value to `relative` so that we can position our headings relatively to each page. */
 }
 
+.rotatorWrapper > * > a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
 /* We consider the h2 tag as the heading of each page */
-.rotatorWrapper > * > h2 {
+.rotatorWrapper > * > a > h2 {
   position: absolute;
   background-color: gray;
   bottom: 0;
