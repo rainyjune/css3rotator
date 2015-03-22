@@ -11,6 +11,9 @@
       pauseAfterTransition: true,
       autoPlay: true
     };
+    
+    var currentTranslateXValue = null;
+    
     var mergedOptions = $.extend(defaults, options);
 
     var transitionEndEventName = getTransitionEndEventName();
@@ -76,15 +79,20 @@
       }
     }
     
-    function setTranslateXValue() {
-      var value = element.width() * pageIndex;
-      value = -value + "px";
+    function setTranslateXValue(value) {
+      if (!value) {
+        value = element.width() * pageIndex;
+        currentTranslateXValue = - value;
+        value = currentTranslateXValue + "px";
+      }
+      
       slideContainer.css({
         "-webkit-transform": "translateX(" + value + ")",
         "-moz-transform": "translateX(" + value + ")",
         "-o-transform": "translateX(" + value + ")",
         "transform": "translateX(" + value + ")"
       });
+      
     }
 
     function transitionEndEventHandler() {
@@ -96,6 +104,9 @@
     function bindEvents() {
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
       $(window).on("orientationchange", handleOrientationChange);
+      $(element).on("swipeMy", function(e) {
+        enableTransitionDuration();
+      });
       $(element).on("swipeLeftMy", function(e) {
         console.log("swipeLeft:", e);
         next();
@@ -103,6 +114,17 @@
       $(element).on("swipeRightMy", function(e) {
         console.log("swipeRight:", e);
         prev();
+      });
+      $(element).on("swipeStartMy", function(){
+        disableTransitionDuration();
+      });
+      $(element).on("swipeCancelMy", function(){
+        enableTransitionDuration();
+        setTranslateXValue();
+      });
+      $(element).on("swipeProgressMy", function(e, e1, e2) {
+        setTranslateXValue((currentTranslateXValue + e1) + "px");
+        console.log("progrsss:", (currentTranslateXValue + e1) + "px");
       });
     }
     
@@ -136,6 +158,14 @@
         "-o-transition-delay": mergedOptions.transitonInterval,
         "transition-delay": mergedOptions.transitonInterval
       });
+    }
+    
+    function disableTransitionDuration() {
+      slideContainer.addClass("duration-initial");
+    }
+    
+    function enableTransitionDuration() {
+      slideContainer.removeClass("duration-initial");
     }
     
     function addIndicator() {
