@@ -131,6 +131,13 @@ ul, li {
   transition: none !important;
 }
 
+.duration-initial {
+  -webkit-transition-duration: 0 !important;
+  -moz-transition-duration: 0 !important;
+  -o-transition-duration: 0 !important;
+  transition-duration: 0 !important;
+}
+
 /* Page */
 #testDiv {
   outline: 1px dotted red;
