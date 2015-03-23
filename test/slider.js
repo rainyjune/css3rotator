@@ -103,9 +103,12 @@
 
     function bindEvents() {
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
+      var count = 0;
       $(window).on("orientationchange", handleOrientationChange);
       $(element).on("swipeMy", function(e) {
         enableTransitionDuration();
+        count = 0;
+        $("#debug").text("count:" + count);
       });
       $(element).on("swipeLeftMy", function(e) {
         console.log("swipeLeft:", e);
@@ -123,8 +126,10 @@
         setTranslateXValue();
       });
       $(element).on("swipeProgressMy", function(e, e1, e2) {
+        count++;
         setTranslateXValue((currentTranslateXValue + e1) + "px");
         console.log("progrsss:", (currentTranslateXValue + e1) + "px");
+        $("#debug").text("count:" + count + " progrsss:" + (currentTranslateXValue + e1) + "px");
       });
     }
     
@@ -191,10 +196,10 @@
       undefined,
       el = document.createElement('div'),
       transitions = {
+        'WebkitTransition':'webkitTransitionEnd',
         'transition':'transitionend',
         'OTransition':'otransitionend',  // oTransitionEnd in very old Opera
-        'MozTransition':'transitionend',
-        'WebkitTransition':'webkitTransitionEnd'
+        'MozTransition':'transitionend'
       };
     
     for (i in transitions) {
