@@ -17,8 +17,10 @@
     var mergedOptions = $.extend(defaults, options);
 
     var transitionEndEventName = getTransitionEndEventName();
-    var slideCount = 0,
-        pageIndex = 0,
+    var slideCount = 0, // Original count, starts from 0.
+        pageIndex = 0, // Original index, starts from 0.
+        slideDisplayCount = 0, // Display page count, start from 0.
+        slidePageIndex = 1, // Display page index, start from 0, defaults to 1.
         slideContainer = null,
         slides = null,
         indicators = null,
@@ -32,7 +34,15 @@
       slideContainer.addClass("rotatorWrapper").addClass("flex-it");
       slides = slideContainer.children();
       slideCount = slides.length;
-      slideContainer.width(slideCount + "00%");      
+      
+      addDuplicatePages();
+      slideDisplayCount = slideContainer.children().size();
+      
+      slideContainer.width(slideDisplayCount + "00%");      
+      
+      setTranslateXValue(-element.width() + 'px'); //add
+      currentTranslateXValue = -element.width();
+      
       addIndicator();
       bindEvents();
       setTimeout(function(){
@@ -42,6 +52,14 @@
         }
         autoPlay();
       }, 0);
+    }
+    
+    function addDuplicatePages() {
+      var oldPages = slideContainer.children();
+      var firstOldPage = oldPages.eq(0);
+      var lastOldPage = oldPages.eq(-1);
+      slideContainer.prepend(lastOldPage.clone());
+      slideContainer.append(firstOldPage.clone());
     }
     
     function prev() {
@@ -65,23 +83,25 @@
     
     function updateSlideIndex(isNext) {
       if (isNext) {
+        slidePageIndex++;
         if (pageIndex === slideCount -1) {
           pageIndex = 0;
         } else {
           pageIndex++;
         }
       } else{
-          if (pageIndex === 0) {
-            pageIndex = slideCount -1;
-          } else {
-            pageIndex--;
-          }
+        slidePageIndex--;
+        if (pageIndex === 0) {
+          pageIndex = slideCount -1;
+        } else {
+          pageIndex--;
+        }
       }
     }
     
     function setTranslateXValue(value) {
       if (!value) {
-        value = element.width() * pageIndex;
+        value = element.width() * slidePageIndex;
         currentTranslateXValue = - value;
         value = currentTranslateXValue + "px";
       }
@@ -120,6 +140,13 @@
       });
       $(element).on("swipeStartMy", function(){
         disableTransitionDuration();
+        if (slidePageIndex === slideDisplayCount -1 ) {
+          slidePageIndex = 1;
+          setTranslateXValue();
+        } else if (slidePageIndex === 0) {
+          slidePageIndex = slideDisplayCount - 2;
+          setTranslateXValue();
+        }
       });
       $(element).on("swipeCancelMy", function(){
         enableTransitionDuration();
