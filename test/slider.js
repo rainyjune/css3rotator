@@ -77,7 +77,27 @@
     
     function autoPlay() {
       if (mergedOptions.autoPlay) {
-        next();
+        if (slidePageIndex === slideDisplayCount -1 ) {
+          disableTransitionDuration();
+          slidePageIndex = 1;
+          setTranslateXValue();
+ 
+          setTimeout(function(){
+            enableTransitionDuration();
+            next();
+          }, 0);
+        } else if (slidePageIndex === 0) {
+          disableTransitionDuration();
+          slidePageIndex = slideDisplayCount - 2;
+          setTranslateXValue();
+          
+          setTimeout(function(){
+            enableTransitionDuration();
+            next();
+          }, 0);
+        } else {
+          next();
+        }
       }
     }
     
