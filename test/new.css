@@ -147,6 +147,11 @@ ul, li {
   -moz-transition-duration: 0 !important;
   -o-transition-duration: 0 !important;
   transition-duration: 0 !important;
+  
+  -webkit-transition-property: none !important;
+  -moz-transition-property: none !important;
+  -o-transition-property: none !important;
+  transition-property: none !important;
 }
 
 /* Page */
