@@ -32,6 +32,7 @@
       element.addClass("rotatorRootElement"); // add class
       slideContainer = element.find(mergedOptions.container); // Find the list
       slideContainer.addClass("rotatorWrapper").addClass("flex-it");
+      addSliderItems();
       slides = slideContainer.children();
       slideCount = slides.length;
       
@@ -52,6 +53,25 @@
         }
         autoPlay();
       }, 0);
+    }
+    
+    function addSliderItems() {
+      var dataSource = mergedOptions.dataSource;
+      if (dataSource && $.isArray(dataSource)) {
+        var items = [];
+        $.each(dataSource, function(index, item){
+          items.push(getSliderItemString(item));
+        });
+        slideContainer.append(items.join(''));
+      }
+    }
+    
+    function getSliderItemString(itemData) {
+      var itemDom = $("#slider-item-template").clone().find("li");
+      itemDom.css('background-image', 'url(' + itemData.img + ')');
+      itemDom.find("a").attr('data-href', itemData.link);
+      itemDom.find('h2').text(itemData.title);
+      return itemDom.prop('outerHTML');
     }
     
     function addDuplicatePages() {
@@ -145,6 +165,10 @@
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
       var count = 0;
       $(window).on("orientationchange", handleOrientationChange);
+      $(element).on("click", "a[data-href]", function(){
+        window.location = $(this).attr('data-href');
+        return false;
+      });
       $(element).on("swipeMy", function(e) {
         enableTransitionDuration();
         count = 0;
