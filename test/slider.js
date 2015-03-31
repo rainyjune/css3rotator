@@ -177,6 +177,7 @@
         window.location = $(this).attr('data-href');
         return false;
       });
+      
       $(element).on("swipeMy", function(e) {
         enableTransitionDuration();
         //setAutoPlay();
@@ -191,15 +192,22 @@
         console.log("swipeRight:", e);
         prev();
       });
+      
       $(element).on("swipeStartMy", function(){
         window.clearTimeout(timer);
+        var nowTranslateXValue = getTranslateXValue(slideContainer[0]);
+        currentTranslateXValue = nowTranslateXValue;
         disableTransitionDuration();
+        setTranslateXValue(nowTranslateXValue+'px');
+        console.log('x:'+nowTranslateXValue);
         if (slidePageIndex === slideDisplayCount -1 ) {
           slidePageIndex = 1;
           setTranslateXValue();
         } else if (slidePageIndex === 0) {
           slidePageIndex = slideDisplayCount - 2;
           setTranslateXValue();
+        } else {
+          
         }
       });
       $(element).on("swipeCancelMy", function(){
@@ -207,12 +215,14 @@
         //setAutoPlay();
         setTranslateXValue();
       });
+      
       $(element).on("swipeProgressMy", function(e, e1, e2) {
         count++;
         setTranslateXValue((currentTranslateXValue + e1) + "px");
-        console.log("progrsss:", (currentTranslateXValue + e1) + "px");
+        //console.log("progrsss:", (currentTranslateXValue + e1) + "px");
         $("#debug").text("count:" + count + " progrsss:" + (currentTranslateXValue + e1) + "px");
       });
+      
     }
     
     function handleOrientationChange() {
@@ -294,6 +304,37 @@
     }
     //TODO: throw 'TransitionEnd event is not supported in this browser';
     return '';
+  }
+  
+  
+  /**
+   * Return the CSS3 translatex value of a DOM element.
+   * @param {Object} domElement : A native DOM element
+   * @returns {mixed}
+   */
+  function getTranslateXValue(domElement) {
+    var cssMatrixObject = null;
+    if (typeof WebKitCSSMatrix !== "undefined") {
+      cssMatrixObject = WebKitCSSMatrix;
+    } else if (typeof MSCSSMatrix !== "undefined") {
+      cssMatrixObject = MSCSSMatrix;
+    } else if (typeof DOMMatrix !== "undefined") {
+      cssMatrixObject = DOMMatrix;
+    }
+
+    var style = window.getComputedStyle(domElement);
+
+    var matrixString = '';
+    if (typeof style.webkitTransform !== "undefined") {
+      matrixString = style.webkitTransform;
+    } else if (typeof style.mozTransform !== "undefined") {
+      matrixString = style.mozTransform;
+    } else if (typeof style.transform !== "undefined") {
+      matrixString = style.transform;
+    }
+
+    var matrix = new cssMatrixObject(matrixString);
+    return matrix.m41;
   }
   
   $.fn.css3Rotator = function (options) {
