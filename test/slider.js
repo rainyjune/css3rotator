@@ -9,7 +9,7 @@
       container: '.rotatorWrapper',
       transitionDuration: '5s',
       slideWidth: element.width(), /* TODO  */
-      transitonInterval: '2s',
+      transitonInterval: '2000',
       pauseAfterTransition: true,
       autoPlay: true
     };
@@ -50,11 +50,16 @@
       bindEvents();
       setTimeout(function(){
         setTransitionDuration();
-        if (mergedOptions.autoPlay) {
-          setTransitionDelay();
-        }
-        autoPlay();
+        setAutoPlay();
+        //autoPlay();
       }, 0);
+    }
+    
+    function setAutoPlay() {
+      if (mergedOptions.autoPlay) {
+        //setTransitionDelay();
+        timer = setTimeout(autoPlay, mergedOptions.transitonInterval);
+      }
     }
     
     function addSliderItems() {
@@ -159,7 +164,8 @@
 
     function transitionEndEventHandler() {
       updateIndicatorStatus();
-      autoPlay();
+      //autoPlay();
+      setAutoPlay();
       return false;
     }
 
@@ -173,6 +179,7 @@
       });
       $(element).on("swipeMy", function(e) {
         enableTransitionDuration();
+        //setAutoPlay();
         count = 0;
         $("#debug").text("count:" + count);
       });
@@ -185,6 +192,7 @@
         prev();
       });
       $(element).on("swipeStartMy", function(){
+        window.clearTimeout(timer);
         disableTransitionDuration();
         if (slidePageIndex === slideDisplayCount -1 ) {
           slidePageIndex = 1;
@@ -196,6 +204,7 @@
       });
       $(element).on("swipeCancelMy", function(){
         enableTransitionDuration();
+        //setAutoPlay();
         setTranslateXValue();
       });
       $(element).on("swipeProgressMy", function(e, e1, e2) {
@@ -207,14 +216,17 @@
     }
     
     function handleOrientationChange() {
-      slideContainer.addClass("notransition");// Disable transition
+      //slideContainer.addClass("notransition");// Disable transition
+      disableTransitionDuration();
       setTimeout(function(){
         setTranslateXValue(); 
         updateIndicatorStatus();
         // Resume transition after the orientation change event.
         setTimeout(function(){
-          slideContainer.removeClass("notransition"); // Enable transition
-          autoPlay();
+          //slideContainer.removeClass("notransition"); // Enable transition
+          //autoPlay();
+          enableTransitionDuration();
+          setAutoPlay();
         }, 0);
       }, 500);
       return false;
