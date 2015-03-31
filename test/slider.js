@@ -1,3 +1,5 @@
+/* global Zepto */
+
 ﻿(function(factory){
   var $ = (typeof Zepto !== "undefined") ? Zepto : jQuery;
   factory($);
