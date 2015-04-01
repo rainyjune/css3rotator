@@ -202,10 +202,16 @@
         console.log('x:'+nowTranslateXValue);
         if (slidePageIndex === slideDisplayCount -1 ) {
           slidePageIndex = 1;
-          setTranslateXValue();
+          var value = - element.width() * 2 + (slideContainer.width() + nowTranslateXValue);
+          currentTranslateXValue = value;
+          setTranslateXValue(value+ "px");
+          console.log('slidePageIndex === slideDisplayCount -1, now:',currentTranslateXValue);
         } else if (slidePageIndex === 0) {
           slidePageIndex = slideDisplayCount - 2;
-          setTranslateXValue();
+          var value = - element.width() * slidePageIndex + nowTranslateXValue;
+          currentTranslateXValue = value;
+          setTranslateXValue(value + "px");
+          //console.log('slidePageIndex === 0, now:',currentTranslateXValue);
         } else {
           
         }
