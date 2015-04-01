@@ -27,6 +27,7 @@ ul, li {
   background-color: gray;
   height: 100%;
   width: 100%; /* Defaults to 100%. This value will be overwritten by JavaScript according to pages count. */
+  -webkit-backface-visibility: hidden; /* Prevent flickering of CSS transitions and transforms in Webkit */
 }
     
 .flex-it {
@@ -181,3 +182,20 @@ ul, li {
   transform: translateX(-20.33%);
   */
 }
+
+#testDiv2 li {
+  outline: 1px solid red;
+}
+
+@media (max-width: 600px) {
+  #testDiv2 li {
+    width: calc(100% - 30px);
+  }
+}
+
+@media (min-width: 600px) {
+  #testDiv2 li {
+    width: calc(100% - 50px);
+  }
+}
+
