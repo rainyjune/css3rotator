@@ -239,6 +239,7 @@
     
     function handleOrientationChange() {
       //slideContainer.addClass("notransition");// Disable transition
+      window.clearTimeout(timer);
       disableTransitionDuration();
       setTimeout(function(){
         slidePageWidth = slideContainer.children().eq(0).width();
