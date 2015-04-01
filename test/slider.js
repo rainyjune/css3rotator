@@ -8,7 +8,7 @@
     var defaults = {
       container: '.rotatorWrapper',
       transitionDuration: '5s',
-      slideWidth: element.width(), /* TODO  */
+      slideWidth: element.width(),
       transitonInterval: '2000',
       pauseAfterTransition: true,
       autoPlay: true
@@ -40,11 +40,14 @@
       
       addDuplicatePages();
       slideDisplayCount = slideContainer.children().size();
+      var slideContainerWidth = slideDisplayCount + "00%";
+      if (mergedOptions.slideWidth !== element.width()) {
+        slideContainerWidth = mergedOptions.slideWidth * slideDisplayCount;
+      }
+      slideContainer.width(slideContainerWidth);      
       
-      slideContainer.width(slideDisplayCount + "00%");      
-      
-      setTranslateXValue(-element.width() + 'px'); //add
-      currentTranslateXValue = -element.width();
+      setTranslateXValue(-mergedOptions.slideWidth + 'px'); //add
+      currentTranslateXValue = - mergedOptions.slideWidth;
       
       addIndicator();
       bindEvents();
@@ -148,7 +151,7 @@
     
     function setTranslateXValue(value) {
       if (!value) {
-        value = element.width() * slidePageIndex;
+        value = mergedOptions.slideWidth * slidePageIndex;
         currentTranslateXValue = - value;
         value = currentTranslateXValue + "px";
       }
@@ -202,13 +205,13 @@
         console.log('x:'+nowTranslateXValue);
         if (slidePageIndex === slideDisplayCount -1 ) {
           slidePageIndex = 1;
-          var value = - element.width() * 2 + (slideContainer.width() + nowTranslateXValue);
+          var value = - mergedOptions.slideWidth * 2 + (slideContainer.width() + nowTranslateXValue);
           currentTranslateXValue = value;
           setTranslateXValue(value+ "px");
           console.log('slidePageIndex === slideDisplayCount -1, now:',currentTranslateXValue);
         } else if (slidePageIndex === 0) {
           slidePageIndex = slideDisplayCount - 2;
-          var value = - element.width() * slidePageIndex + nowTranslateXValue;
+          var value = - mergedOptions.slideWidth * slidePageIndex + nowTranslateXValue;
           currentTranslateXValue = value;
           setTranslateXValue(value + "px");
           //console.log('slidePageIndex === 0, now:',currentTranslateXValue);
