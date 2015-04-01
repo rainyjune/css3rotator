@@ -28,6 +28,7 @@
         indicators = null,
         timer = null;
 
+    var slidePageWidth;
     init();
 
     function init() {
@@ -44,7 +45,9 @@
       if (mergedOptions.slideWidth !== element.width()) {
         slideContainerWidth = mergedOptions.slideWidth * slideDisplayCount;
       }
-      slideContainer.width(slideContainerWidth);      
+      slideContainer.width(slideContainerWidth);
+      
+      slidePageWidth = slideContainer.children().eq(0).width();
       
       setTranslateXValue(-mergedOptions.slideWidth + 'px'); //add
       currentTranslateXValue = - mergedOptions.slideWidth;
@@ -151,7 +154,7 @@
     
     function setTranslateXValue(value) {
       if (!value) {
-        value = mergedOptions.slideWidth * slidePageIndex;
+        value = slidePageWidth * slidePageIndex;
         currentTranslateXValue = - value;
         value = currentTranslateXValue + "px";
       }
@@ -238,6 +241,7 @@
       //slideContainer.addClass("notransition");// Disable transition
       disableTransitionDuration();
       setTimeout(function(){
+        slidePageWidth = slideContainer.children().eq(0).width();
         setTranslateXValue(); 
         updateIndicatorStatus();
         // Resume transition after the orientation change event.
