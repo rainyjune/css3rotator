@@ -11,6 +11,7 @@
       slideWidth: element.width(),
       transitonInterval: '2000',
       pauseAfterTransition: true,
+      loop: false,
       autoPlay: true
     };
     
@@ -22,13 +23,15 @@
     var slideCount = 0, // Original count, starts from 0.
         pageIndex = 0, // Original index, starts from 0.
         slideDisplayCount = 0, // Display page count, start from 0.
-        slidePageIndex = 1, // Display page index, start from 0, defaults to 1.
+        slidePageIndex = 0, // Display page index, start from 0, defaults to 0.
         slideContainer = null,
         slides = null,
         indicators = null,
         timer = null;
 
     var slidePageWidth;
+    var autoPlayFinished;
+    
     init();
 
     function init() {
@@ -38,8 +41,10 @@
       addSliderItems();
       slides = slideContainer.children();
       slideCount = slides.length;
-      
-      addDuplicatePages();
+      if (mergedOptions.loop) {
+        addDuplicatePages();
+        slidePageIndex = 1;
+      }
       slideDisplayCount = slideContainer.children().size();
       var slideContainerWidth = slideDisplayCount + "00%";
       if (mergedOptions.slideWidth !== element.width()) {
@@ -49,21 +54,21 @@
       
       slidePageWidth = slideContainer.children().eq(0).width();
       
-      setTranslateXValue(-mergedOptions.slideWidth + 'px'); //add
-      currentTranslateXValue = - mergedOptions.slideWidth;
+      if (mergedOptions.loop) {
+        setTranslateXValue(-mergedOptions.slideWidth + 'px'); //add
+        currentTranslateXValue = - mergedOptions.slideWidth;
+      }
       
       addIndicator();
       bindEvents();
       setTimeout(function(){
         setTransitionDuration();
         setAutoPlay();
-        //autoPlay();
       }, 0);
     }
     
     function setAutoPlay() {
       if (mergedOptions.autoPlay) {
-        //setTransitionDelay();
         timer = setTimeout(autoPlay, mergedOptions.transitonInterval);
       }
     }
@@ -110,7 +115,16 @@
     
     function autoPlay() {
       if (mergedOptions.autoPlay) {
+        if (autoPlayFinished) {
+          window.clearTimeout(timer);
+          return false;
+        }
         if (slidePageIndex === slideDisplayCount -1 ) {
+          if (!mergedOptions.loop) {
+            autoPlayFinished = true;
+            window.clearTimeout(timer);
+            return false;
+          }
           disableTransitionDuration();
           slidePageIndex = 1;
           setTranslateXValue();
@@ -121,9 +135,10 @@
           }, 0);
         } else if (slidePageIndex === 0) {
           disableTransitionDuration();
-          slidePageIndex = slideDisplayCount - 2;
-          setTranslateXValue();
-          
+          if (mergedOptions.loop) {
+            slidePageIndex = slideDisplayCount - 2;
+            setTranslateXValue();
+          }
           setTimeout(function(){
             enableTransitionDuration();
             next();
@@ -170,7 +185,6 @@
 
     function transitionEndEventHandler() {
       updateIndicatorStatus();
-      //autoPlay();
       setAutoPlay();
       return false;
     }
@@ -184,19 +198,25 @@
         return false;
       });
       
-      $(element).on("swipeMy", function(e) {
+      $(element).on("swipeMy", function() {
         enableTransitionDuration();
         //setAutoPlay();
         count = 0;
         $("#debug").text("count:" + count);
       });
-      $(element).on("swipeLeftMy", function(e) {
-        console.log("swipeLeft:", e);
-        next();
+      $(element).on("swipeLeftMy", function() {
+        if (!mergedOptions.loop && slidePageIndex === slideDisplayCount - 1) {
+          swipeCancelMyHandler();
+        } else {
+          next();
+        }
       });
-      $(element).on("swipeRightMy", function(e) {
-        console.log("swipeRight:", e);
-        prev();
+      $(element).on("swipeRightMy", function() {
+        if (!mergedOptions.loop && slidePageIndex === 0) {
+          swipeCancelMyHandler();
+        } else {
+          prev();
+        }
       });
       
       $(element).on("swipeStartMy", function(){
@@ -206,6 +226,7 @@
         disableTransitionDuration();
         setTranslateXValue(nowTranslateXValue+'px');
         console.log('x:'+nowTranslateXValue);
+        if (!mergedOptions.loop) return false;
         if (slidePageIndex === slideDisplayCount -1 ) {
           slidePageIndex = 1;
           var value = - mergedOptions.slideWidth * 2 + (slideContainer.width() + nowTranslateXValue);
@@ -222,23 +243,22 @@
           
         }
       });
-      $(element).on("swipeCancelMy", function(){
-        enableTransitionDuration();
-        //setAutoPlay();
-        setTranslateXValue();
-      });
+      $(element).on("swipeCancelMy", swipeCancelMyHandler);
       
       $(element).on("swipeProgressMy", function(e, e1, e2) {
         count++;
         setTranslateXValue((currentTranslateXValue + e1) + "px");
-        //console.log("progrsss:", (currentTranslateXValue + e1) + "px");
         $("#debug").text("count:" + count + " progrsss:" + (currentTranslateXValue + e1) + "px");
       });
       
     }
     
+    function swipeCancelMyHandler() {
+      enableTransitionDuration();
+      setTranslateXValue();
+    }
+    
     function handleOrientationChange() {
-      //slideContainer.addClass("notransition");// Disable transition
       window.clearTimeout(timer);
       disableTransitionDuration();
       setTimeout(function(){
@@ -247,8 +267,6 @@
         updateIndicatorStatus();
         // Resume transition after the orientation change event.
         setTimeout(function(){
-          //slideContainer.removeClass("notransition"); // Enable transition
-          //autoPlay();
           enableTransitionDuration();
           setAutoPlay();
         }, 0);
@@ -262,15 +280,6 @@
         "-moz-transition-duration": mergedOptions.transitionDuration,
         "-o-transition-duration": mergedOptions.transitionDuration,
         "transition-duration": mergedOptions.transitionDuration
-      });
-    }
-    
-    function setTransitionDelay() {
-      slideContainer.css({
-        "-webkit-transition-delay": mergedOptions.transitonInterval,
-        "-moz-transition-delay": mergedOptions.transitonInterval,
-        "-o-transition-delay": mergedOptions.transitonInterval,
-        "transition-delay": mergedOptions.transitonInterval
       });
     }
     
