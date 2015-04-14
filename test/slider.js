@@ -9,6 +9,7 @@
       container: '.rotatorWrapper',
       transitionDuration: '5s',
       slideWidth: element.width(),
+      aspectRatio: 2, // Width/Height
       transitonInterval: '2000',
       pauseAfterTransition: true,
       loop: false,
@@ -36,6 +37,7 @@
 
     function init() {
       element.addClass("rotatorRootElement"); // add class
+      setSlideRootHeight();// Set aspect ratio
       slideContainer = element.find(mergedOptions.container); // Find the list
       slideContainer.addClass("rotatorWrapper").addClass("flex-it");
       addSliderItems();
@@ -262,6 +264,7 @@
       window.clearTimeout(timer);
       disableTransitionDuration();
       setTimeout(function(){
+        setSlideRootHeight();
         slidePageWidth = slideContainer.children().eq(0).width();
         setTranslateXValue(); 
         updateIndicatorStatus();
@@ -305,6 +308,14 @@
     function updateIndicatorStatus() {
       indicators.removeClass("current");
       indicators.eq(pageIndex).addClass("current");
+    }
+    
+    function getSlideRootHeight(aspectRatio) {
+      return element.width() / aspectRatio;
+    }
+    
+    function setSlideRootHeight() {
+      element.height(getSlideRootHeight(mergedOptions.aspectRatio));
     }
     
   }
