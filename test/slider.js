@@ -193,7 +193,7 @@
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
       var count = 0;
       $(window).on("orientationchange", handleOrientationChange);
-      $(element).on("click", "a[data-href]", function(){
+      $(element).on("tapMy", "a[data-href]", function(){
         window.location = $(this).attr('data-href');
         return false;
       });
