@@ -16,6 +16,8 @@
       autoPlay: true
     };
     
+    var isTranslate3dSupported = has3d();
+    
     var currentTranslateXValue = null;
     
     var mergedOptions = $.extend(defaults, options);
@@ -176,13 +178,21 @@
         value = currentTranslateXValue + "px";
       }
       
-      slideContainer.css({
-        "-webkit-transform": "translateX(" + value + ")",
-        "-moz-transform": "translateX(" + value + ")",
-        "-o-transform": "translateX(" + value + ")",
-        "transform": "translateX(" + value + ")"
-      });
-      
+      if (isTranslate3dSupported) {
+        slideContainer.css({
+          "-webkit-transform": "translate3d(" + value + ", 0, 0)",
+          "-moz-transform": "translate3d(" + value + ", 0, 0)",
+          "-o-transform": "translate3d(" + value + ", 0, 0)",
+          "transform": "translate3d(" + value + ", 0, 0)"
+        });
+      } else {
+        slideContainer.css({
+          "-webkit-transform": "translateX(" + value + ")",
+          "-moz-transform": "translateX(" + value + ")",
+          "-o-transform": "translateX(" + value + ")",
+          "transform": "translateX(" + value + ")"
+        });
+      }      
     }
 
     function transitionEndEventHandler() {
@@ -338,6 +348,32 @@
     }
     //TODO: throw 'TransitionEnd event is not supported in this browser';
     return '';
+  }
+  
+  function has3d(){
+      var el = document.createElement('p'),
+      has3d,
+      transforms = {
+          'webkitTransform':'-webkit-transform',
+          'OTransform':'-o-transform',
+          'msTransform':'-ms-transform',
+          'MozTransform':'-moz-transform',
+          'transform':'transform'
+      };
+   
+      // Add it to the body to get the computed style
+      document.body.insertBefore(el, null);
+   
+      for(var t in transforms){
+          if( el.style[t] !== undefined ){
+              el.style[t] = 'translate3d(1px,1px,1px)';
+              has3d = window.getComputedStyle(el).getPropertyValue(transforms[t]);
+          }
+      }
+   
+      document.body.removeChild(el);
+   
+      return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
   }
   
   
