@@ -141,7 +141,6 @@
       if (mergedOptions.slideMode === "horizontal") {
         setTranslateXValue();
       } else {
-        debugger;
         setTranslateYValue();
       }
     }
@@ -272,7 +271,6 @@
       if (mergedOptions.slideMode === "horizontal") {
         $(element).on("swipeLeft", function() {
           if (!mergedOptions.loop && slidePageIndex === slideDisplayCount - 1) {
-            debugger;
             swipeCancelMyHandler();
           } else {
             next();
@@ -280,7 +278,6 @@
         });
         $(element).on("swipeRight", function() {
           if (!mergedOptions.loop && slidePageIndex === 0) {
-            debugger;
             swipeCancelMyHandler();
           } else {
             prev();
@@ -289,7 +286,6 @@
       } else {
         $(element).on("swipeUp", function() {
           if (!mergedOptions.loop && slidePageIndex === slideDisplayCount - 1) {
-            debugger;
             swipeCancelMyHandler();
           } else {
             next();
@@ -297,7 +293,6 @@
         });
         $(element).on("swipeDown", function() {
           if (!mergedOptions.loop && slidePageIndex === 0) {
-            debugger;
             swipeCancelMyHandler();
           } else {
             prev();
@@ -358,7 +353,6 @@
         }
       });
       $(element).on("swipeCancel", function(){
-        debugger;
         swipeCancelMyHandler();
       });
       
@@ -382,7 +376,6 @@
     
     function swipeCancelMyHandler() {
       enableTransitionDuration();
-      debugger;
       if (mergedOptions.slideMode === "horizontal") {
         setTranslateXValue();
       } else {
