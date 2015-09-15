@@ -54,6 +54,16 @@ ul, li {
   -ms-flex-direction: row;
   flex-direction: row;
 }
+
+.flex-col {
+  -moz-box-direction: column;
+  -webkit-box-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flexbox-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
       
 .rotatorWrapper > * {
   -webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
@@ -76,6 +86,10 @@ ul, li {
   background-position: center;
   
   position: relative; /* Set this value to `relative` so that we can position our headings relatively to each page. */
+}
+
+.rotatorWrapper.flex-col > * {
+  width: 100%;
 }
 
 .rotatorWrapper > * > a {
