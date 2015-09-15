@@ -499,13 +499,23 @@
       return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
   }
   
-  
+  function getTranslateXValue(domElement) {
+    var val = getTranslateValue(domElement);
+    return val.m41;
+  }
+
+  function getTranslateYValue(domElement) {
+    var val = getTranslateValue(domElement);
+    return val.m42;
+  }
+
   /**
-   * Return the CSS3 translatex value of a DOM element.
+   * Return the CSS3 translate value of a DOM element. 
+   * Note: IE 9+
    * @param {Object} domElement : A native DOM element
    * @returns {mixed}
    */
-  function getTranslateXValue(domElement) {
+  function getTranslateValue(domElement) {
     var cssMatrixObject = null;
     if (typeof WebKitCSSMatrix !== "undefined") {
       cssMatrixObject = WebKitCSSMatrix;
@@ -526,32 +536,7 @@
       matrixString = style.transform;
     }
 
-    var matrix = new cssMatrixObject(matrixString);
-    return matrix.m41;
-  }
-  function getTranslateYValue(domElement) {
-    var cssMatrixObject = null;
-    if (typeof WebKitCSSMatrix !== "undefined") {
-      cssMatrixObject = WebKitCSSMatrix;
-    } else if (typeof MSCSSMatrix !== "undefined") {
-      cssMatrixObject = MSCSSMatrix;
-    } else if (typeof DOMMatrix !== "undefined") {
-      cssMatrixObject = DOMMatrix;
-    }
-
-    var style = window.getComputedStyle(domElement);
-
-    var matrixString = '';
-    if (typeof style.webkitTransform !== "undefined") {
-      matrixString = style.webkitTransform;
-    } else if (typeof style.mozTransform !== "undefined") {
-      matrixString = style.mozTransform;
-    } else if (typeof style.transform !== "undefined") {
-      matrixString = style.transform;
-    }
-
-    var matrix = new cssMatrixObject(matrixString);
-    return matrix.m42;
+    return new cssMatrixObject(matrixString);
   }
   
   $.fn.css3Rotator = function (options) {
