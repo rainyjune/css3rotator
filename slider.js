@@ -14,6 +14,8 @@
       aspectRatio: 2, // Width/Height, maybe "fullscreen"
       transitonInterval: '2000',
       pauseAfterTransition: true,
+      indicatorClass: "indicator",
+      indicatorActiveItemClass: "current",
       loop: false,
       autoPlay: true
     };
@@ -255,7 +257,8 @@
     function bindEvents() {
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
       var count = 0;
-      $(window).on("orientationchange", handleOrientationChange);
+      //$(window).on("orientationchange", handleOrientationChange);
+      $(window).on("resize", handleOrientationChange);
       new TouchObject(element[0]);
       $(element).on("tap", "a[data-href]", function(){
         window.location = $(this).attr('data-href');
@@ -387,9 +390,15 @@
       window.clearTimeout(timer);
       disableTransitionDuration();
       setTimeout(function(){
+        element.css('height', '');
         setSlideRootHeight();
-        slidePageWidth = slideContainer.children().eq(0).width();
-        setTranslateXValue(); 
+        if (mergedOptions.slideMode === "horizontal") {
+          slidePageWidth = slideContainer.children().eq(0).width();
+          setTranslateXValue(); 
+        } else {
+          slidePageHeight = slideContainer.children().eq(0).height();
+          setTranslateYValue(); 
+        }
         updateIndicatorStatus();
         // Resume transition after the orientation change event.
         setTimeout(function(){
@@ -418,19 +427,19 @@
     }
     
     function addIndicator() {
-      var domStr = "<strong class='indicator'>";
+      var domStr = "<strong class='" + mergedOptions.indicatorClass +"'>";
       for (var i = 0; i < slideCount; i++) {
         domStr += "<span></span>";
       }
       domStr += "</strong>";
       element.append(domStr);
-      indicators = element.find('.indicator').children();
-      indicators.eq(0).addClass("current");
+      indicators = element.find('.' + mergedOptions.indicatorClass).children();
+      indicators.eq(0).addClass(mergedOptions.indicatorActiveItemClass);
     }
     
     function updateIndicatorStatus() {
-      indicators.removeClass("current");
-      indicators.eq(pageIndex).addClass("current");
+      indicators.removeClass(mergedOptions.indicatorActiveItemClass);
+      indicators.eq(pageIndex).addClass(mergedOptions.indicatorActiveItemClass);
     }
     
     function getSlideRootHeight(aspectRatio) {
