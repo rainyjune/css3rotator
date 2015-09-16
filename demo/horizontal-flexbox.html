@@ -4,16 +4,7 @@
     <meta charset="utf-8" />
     <title>Flexbox test page</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="rotator.css" />
-    <style type="text/css">
-      #testDiv {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../rotator.css" />
   </head>
   <body>
     <div id="testDiv">
@@ -21,6 +12,21 @@
       </ul>
     </div>
     <p id="debug"></p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p><p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
+    <p>ssss</p>
     
     <ul style="display: none;" id="slider-item-template">
       <li>
@@ -31,14 +37,12 @@
     </ul>
     <script src="http://zeptojs.com/zepto.min.js"></script>
     <script src="https://cdn.rawgit.com/rainyjune/mobiletouch/master/touch.js" type="text/javascript"></script>
-    <script src="slider.js"></script>
+    <script src="../slider.js"></script>
     <script>
       $(function(){
         $("#testDiv").css3Rotator({
           container: '.someclass',
           transitionDuration: "0.3s",
-          slideMode: 'vertical',
-          aspectRatio: 'fullscreen',
           autoPlay: false,
           dataSource: [
             {
