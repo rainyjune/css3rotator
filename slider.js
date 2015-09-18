@@ -361,8 +361,6 @@
       
       $(element).on("swipeProgress", function(e, e1, e2) {
         console.log("e", e);
-        console.log("e1", e1);
-        console.log("e2", e2);
         count++;
         var movedX = e.detail.detail.movedPageX,
             movedY = e.detail.detail.movedPageY;
