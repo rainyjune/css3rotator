@@ -521,6 +521,8 @@
       matrixString = style.webkitTransform;
     } else if (typeof style.mozTransform !== "undefined") {
       matrixString = style.mozTransform;
+    } else if (typeof style.msTransform !== "undefined") {
+      matrixString = style.msTransform;
     } else if (typeof style.transform !== "undefined") {
       matrixString = style.transform;
     }
