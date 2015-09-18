@@ -208,21 +208,7 @@
         value = currentTranslateXValue + "px";
       }
       
-      if (isTranslate3dSupported) {
-        slideContainer.css({
-          "-webkit-transform": "translate3d(" + value + ", 0, 0)",
-          "-moz-transform": "translate3d(" + value + ", 0, 0)",
-          "-o-transform": "translate3d(" + value + ", 0, 0)",
-          "transform": "translate3d(" + value + ", 0, 0)"
-        });
-      } else {
-        slideContainer.css({
-          "-webkit-transform": "translateX(" + value + ")",
-          "-moz-transform": "translateX(" + value + ")",
-          "-o-transform": "translateX(" + value + ")",
-          "transform": "translateX(" + value + ")"
-        });
-      }      
+      setSlideContainerTransform(value, 0);
     }
     function setTranslateYValue(value) {
       if (!value) {
@@ -230,20 +216,23 @@
         currentTranslateYValue = - value;
         value = currentTranslateYValue + "px";
       }
-      
+      setSlideContainerTransform(0, value);
+    }
+
+    function setSlideContainerTransform(x, y) {
       if (isTranslate3dSupported) {
         slideContainer.css({
-          "-webkit-transform": "translate3d(0, " + value + ", 0)",
-          "-moz-transform": "translate3d(0, " + value + ", 0)",
-          "-o-transform": "translate3d(0, " + value + ", 0)",
-          "transform": "translate3d(0, " + value + ", 0)"
+          "-webkit-transform": "translate3d(" + x + ", " + y + ", 0)",
+          "-moz-transform": "translate3d(" + x + ", " + y + ", 0)",
+          "-o-transform": "translate3d(" + x + ", " + y + ", 0)",
+          "transform": "translate3d(" + x + ", " + y + ", 0)"
         });
       } else {
         slideContainer.css({
-          "-webkit-transform": "translateY(" + value + ")",
-          "-moz-transform": "translateY(" + value + ")",
-          "-o-transform": "translateY(" + value + ")",
-          "transform": "translateY(" + value + ")"
+          "-webkit-transform": "translateX("+ x + ") translateY(" + y + ")",
+          "-moz-transform": "translateX(" + x + ") translateY(" + y + ")",
+          "-o-transform": "translateX("+ x + ") translateY(" + y + ")",
+          "transform": "translateX("+ x + ") translateY(" + y + ")"
         });
       }
     }
