@@ -442,6 +442,10 @@
     
   }
   
+  /**
+   * Get the transitionend event name.
+   * Works: IE 10+, Firefox 4+, Chrome 4+, iOS, Android
+   */
   function getTransitionEndEventName() {
     var i,
       undefined,
