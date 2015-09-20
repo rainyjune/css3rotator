@@ -439,7 +439,22 @@
     function setSlideRootHeight() {
       element.height(getSlideRootHeight(mergedOptions.aspectRatio));
     }
-    
+  
+    Object.defineProperty(this, "dispose", {
+      value: function() {
+        $(window).off("resize", handleOrientationChange);
+        slideContainer.off(transitionEndEventName, transitionEndEventHandler);
+        $(element).off("tap", tapHandler);
+        $(element).off("swipe", enableTransitionDuration);
+        $(element).off("swipeUp", swipeUpHandler);
+        $(element).off("swipeDown", swipeDownHandler);
+        $(element).off("swipeLeft", swipeLeftHandler);
+        $(element).off("swipeRight", swipeRightHandler);
+        $(element).off("swipeStart", swipeStartHandler);
+        $(element).off("swipeCancel", swipeCancelMyHandler);
+        $(element).off("swipeProgress", swipeProgressHandler);
+      }
+    });
   }
   
   /**
