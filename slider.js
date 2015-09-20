@@ -244,129 +244,124 @@
     }
 
     function bindEvents() {
-      slideContainer.on(transitionEndEventName, transitionEndEventHandler);
-      $(window).on("resize", handleOrientationChange);
       new TouchObject(element[0]);
-      $(element).on("tap", "a[data-href]", function(){
-        window.location = $(this).attr('data-href');
-        return false;
-      });
-      
-      $(element).on("swipe", function() {
-        enableTransitionDuration();
-        //setAutoPlay();
-      });
-      if (mergedOptions.slideMode === "horizontal") {
-        $(element).on("swipeLeft", function() {
-          if (!mergedOptions.loop && slidePageIndex === slideDisplayCount - 1) {
-            swipeCancelMyHandler();
-          } else {
-            next();
-          }
-        });
-        $(element).on("swipeRight", function() {
-          if (!mergedOptions.loop && slidePageIndex === 0) {
-            swipeCancelMyHandler();
-          } else {
-            prev();
-          }
-        });
-        $(element).on("swipeDown", function() {
-          swipeCancelMyHandler();
-        });
-        $(element).on("swipeUp", function() {
-          swipeCancelMyHandler();
-        });
-      } else {
-        $(element).on("swipeUp", function() {
-          if (!mergedOptions.loop && slidePageIndex === slideDisplayCount - 1) {
-            swipeCancelMyHandler();
-          } else {
-            next();
-          }
-        });
-        $(element).on("swipeDown", function() {
-          if (!mergedOptions.loop && slidePageIndex === 0) {
-            swipeCancelMyHandler();
-          } else {
-            prev();
-          }
-        });
-        $(element).on("swipeLeft", function() {
-          swipeCancelMyHandler();
-        });
-        $(element).on("swipeRight", function() {
-          swipeCancelMyHandler();
-        });
-      }
-      
-      $(element).on("swipeStart", function(){
-        window.clearTimeout(timer);
-        if (mergedOptions.slideMode === "horizontal") {
-          var nowTranslateXValue = getTranslateXValue(slideContainer[0]);
-          currentTranslateXValue = nowTranslateXValue;
-        } else {
-          var nowTranslateYValue = getTranslateYValue(slideContainer[0]);
-          currentTranslateYValue = nowTranslateYValue;
-        }
+      $(window).on("resize", handleOrientationChange);
+      slideContainer.on(transitionEndEventName, transitionEndEventHandler);
+      $(element).on("tap", tapHandler);
+      $(element).on("swipe", enableTransitionDuration);
+      $(element).on("swipeUp", swipeUpHandler);
+      $(element).on("swipeDown", swipeDownHandler);
+      $(element).on("swipeLeft", swipeLeftHandler);
+      $(element).on("swipeRight", swipeRightHandler);
+      $(element).on("swipeStart", swipeStartHandler);
+      $(element).on("swipeCancel", swipeCancelMyHandler);
+      $(element).on("swipeProgress", swipeProgressHandler);
+    }
 
-        disableTransitionDuration();
-        if (mergedOptions.slideMode === "horizontal") {
-          setTranslateXValue(nowTranslateXValue+'px');
-        } else {
-          setTranslateYValue(nowTranslateYValue+'px');
-        }
-        if (mergedOptions.slideMode === "horizontal") {
-          console.log('x:'+nowTranslateXValue);
-        } else {
-          console.log('y:'+nowTranslateYValue);
-        }
-        if (!mergedOptions.loop) return false;
-        if (slidePageIndex === slideDisplayCount -1 ) {
-          slidePageIndex = 1;
-          if (mergedOptions.slideMode === "horizontal") {
-            var value = - mergedOptions.slideWidth * 2 + (slideContainer.width() + nowTranslateXValue);
-            currentTranslateXValue = value;
-            setTranslateXValue(value+ "px");
-            console.log('slidePageIndex === slideDisplayCount -1, now:',currentTranslateXValue);
-          } else {
-            var value = - mergedOptions.slideHeight * 2 + (slideContainer.height() + nowTranslateYValue);
-            currentTranslateYValue = value;
-            setTranslateYValue(value+ "px");
-            console.log('slidePageIndex === slideDisplayCount -1, now:',currentTranslateYValue);
-          }
-        } else if (slidePageIndex === 0) {
-          slidePageIndex = slideDisplayCount - 2;
-          if (mergedOptions.slideMode === "horizontal") {
-            var value = - mergedOptions.slideWidth * slidePageIndex + nowTranslateXValue;
-            currentTranslateXValue = value;
-            setTranslateXValue(value + "px");
-            //console.log('slidePageIndex === 0, now:',currentTranslateXValue);
-          } else {
-            var value = - mergedOptions.slideHeight * slidePageIndex + nowTranslateYValue;
-            currentTranslateYValue = value;
-            setTranslateYValue(value + "px");
-            //console.log('slidePageIndex === 0, now:',currentTranslateXValue);
-          }
-        } else {
-          
-        }
-      });
-      $(element).on("swipeCancel", function(){
+    function swipeUpHandler(){
+      if (mergedOptions.slideMode === "horizontal") {
         swipeCancelMyHandler();
-      });
-      
-      $(element).on("swipeProgress", function(e, e1, e2) {
-        console.log("e", e);
-        var movedX = e.detail.detail.movedPageX,
-            movedY = e.detail.detail.movedPageY;
+      } else {
+        swipeNextHandler();
+      }
+    }
+    function swipeDownHandler(){
+      if (mergedOptions.slideMode === "horizontal") {
+        swipeCancelMyHandler();
+      } else {
+        swipePreviousHandler();
+      }
+    }
+    function swipeLeftHandler(){
+      if (mergedOptions.slideMode === "horizontal") {
+        swipeNextHandler();
+      } else {
+        swipeCancelMyHandler();
+      }
+    }
+    function swipeRightHandler(){
+      if (mergedOptions.slideMode === "horizontal") {
+        swipePreviousHandler();
+      } else {
+        swipeCancelMyHandler();
+      }
+    }
+
+    function swipePreviousHandler() {
+      if (!mergedOptions.loop && slidePageIndex === 0) {
+        swipeCancelMyHandler();
+      } else {
+        prev();
+      }
+    }
+
+    function swipeNextHandler() {
+      if (!mergedOptions.loop && slidePageIndex === slideDisplayCount - 1) {
+        swipeCancelMyHandler();
+      } else {
+        next();
+      }
+    }
+
+    function tapHandler(e){
+      if (e.detail && e.detail.target){
+        window.location = $(e.detail.target).attr('data-href');
+      }
+      return false;
+    }
+
+    function swipeStartHandler(e) {
+      window.clearTimeout(timer);
+      if (mergedOptions.slideMode === "horizontal") {
+        var nowTranslateXValue = getTranslateXValue(slideContainer[0]);
+        currentTranslateXValue = nowTranslateXValue;
+      } else {
+        var nowTranslateYValue = getTranslateYValue(slideContainer[0]);
+        currentTranslateYValue = nowTranslateYValue;
+      }
+
+      disableTransitionDuration();
+      if (mergedOptions.slideMode === "horizontal") {
+        setTranslateXValue(nowTranslateXValue+'px');
+      } else {
+        setTranslateYValue(nowTranslateYValue+'px');
+      }
+      if (!mergedOptions.loop) return false;
+      if (slidePageIndex === slideDisplayCount -1 ) {
+        slidePageIndex = 1;
         if (mergedOptions.slideMode === "horizontal") {
-          setTranslateXValue((currentTranslateXValue + movedX) + "px");
+          var value = - mergedOptions.slideWidth * 2 + (slideContainer.width() + nowTranslateXValue);
+          currentTranslateXValue = value;
+          setTranslateXValue(value+ "px");
         } else {
-          setTranslateYValue((currentTranslateYValue + movedY) + "px");
+          var value = - mergedOptions.slideHeight * 2 + (slideContainer.height() + nowTranslateYValue);
+          currentTranslateYValue = value;
+          setTranslateYValue(value+ "px");
         }
-      });
-      
+      } else if (slidePageIndex === 0) {
+        slidePageIndex = slideDisplayCount - 2;
+        if (mergedOptions.slideMode === "horizontal") {
+          var value = - mergedOptions.slideWidth * slidePageIndex + nowTranslateXValue;
+          currentTranslateXValue = value;
+          setTranslateXValue(value + "px");
+        } else {
+          var value = - mergedOptions.slideHeight * slidePageIndex + nowTranslateYValue;
+          currentTranslateYValue = value;
+          setTranslateYValue(value + "px");
+        }
+      } else {
+        
+      }
+    }
+
+    function swipeProgressHandler(e) {
+      var movedX = e.detail.detail.movedPageX,
+          movedY = e.detail.detail.movedPageY;
+      if (mergedOptions.slideMode === "horizontal") {
+        setTranslateXValue((currentTranslateXValue + movedX) + "px");
+      } else {
+        setTranslateYValue((currentTranslateYValue + movedY) + "px");
+      }
     }
     
     function swipeCancelMyHandler() {
