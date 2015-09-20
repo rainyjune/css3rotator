@@ -245,8 +245,6 @@
 
     function bindEvents() {
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
-      var count = 0;
-      //$(window).on("orientationchange", handleOrientationChange);
       $(window).on("resize", handleOrientationChange);
       new TouchObject(element[0]);
       $(element).on("tap", "a[data-href]", function(){
@@ -257,8 +255,6 @@
       $(element).on("swipe", function() {
         enableTransitionDuration();
         //setAutoPlay();
-        count = 0;
-        $("#debug").text("count:" + count);
       });
       if (mergedOptions.slideMode === "horizontal") {
         $(element).on("swipeLeft", function() {
@@ -362,15 +358,12 @@
       
       $(element).on("swipeProgress", function(e, e1, e2) {
         console.log("e", e);
-        count++;
         var movedX = e.detail.detail.movedPageX,
             movedY = e.detail.detail.movedPageY;
         if (mergedOptions.slideMode === "horizontal") {
           setTranslateXValue((currentTranslateXValue + movedX) + "px");
-          $("#debug").text("count:" + count + " progrsss:" + (currentTranslateXValue + movedX) + "px");
         } else {
           setTranslateYValue((currentTranslateYValue + movedY) + "px");
-          $("#debug").text("count:" + count + " progrsss:" + (currentTranslateYValue + movedY) + "px");
         }
       });
       
