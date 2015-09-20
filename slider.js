@@ -275,6 +275,12 @@
             prev();
           }
         });
+        $(element).on("swipeDown", function() {
+          swipeCancelMyHandler();
+        });
+        $(element).on("swipeUp", function() {
+          swipeCancelMyHandler();
+        });
       } else {
         $(element).on("swipeUp", function() {
           if (!mergedOptions.loop && slidePageIndex === slideDisplayCount - 1) {
@@ -289,6 +295,12 @@
           } else {
             prev();
           }
+        });
+        $(element).on("swipeLeft", function() {
+          swipeCancelMyHandler();
+        });
+        $(element).on("swipeRight", function() {
+          swipeCancelMyHandler();
         });
       }
       
