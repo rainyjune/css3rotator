@@ -237,6 +237,8 @@
       $(window).on("resize", handleOrientationChange);
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
       $(element).on("tap", tapHandler);
+      // If the slides are less than two, we don't add swipe event handlers.
+      if (slideCount < 2) return false;
       $(element).on("swipe", enableTransitionDuration);
       $(element).on("swipeUp", swipeUpHandler);
       $(element).on("swipeDown", swipeDownHandler);
