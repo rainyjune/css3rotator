@@ -21,6 +21,8 @@
     };
     
     var isTranslate3dSupported = has3d();
+    var translateValuePrefix = isTranslate3dSupported ? "translate3d(" : "translate(";
+        translateValuePostfix = isTranslate3dSupported ? ", 0)" : ")";
     
     var currentTranslateXValue = null;
     var currentTranslateYValue = null;
@@ -220,21 +222,8 @@
     }
 
     function setSlideContainerTransform(x, y) {
-      if (isTranslate3dSupported) {
-        slideContainer.css({
-          "-webkit-transform": "translate3d(" + x + ", " + y + ", 0)",
-          "-moz-transform": "translate3d(" + x + ", " + y + ", 0)",
-          "-o-transform": "translate3d(" + x + ", " + y + ", 0)",
-          "transform": "translate3d(" + x + ", " + y + ", 0)"
-        });
-      } else {
-        slideContainer.css({
-          "-webkit-transform": "translateX("+ x + ") translateY(" + y + ")",
-          "-moz-transform": "translateX(" + x + ") translateY(" + y + ")",
-          "-o-transform": "translateX("+ x + ") translateY(" + y + ")",
-          "transform": "translateX("+ x + ") translateY(" + y + ")"
-        });
-      }
+      var translateValue = translateValuePrefix + x + ", " + y + translateValuePostfix;
+      slideContainer.css({ "-webkit-transform": translateValue, "-moz-transform": translateValue, "-o-transform": translateValue, "transform": translateValue, });
     }
 
     function transitionEndEventHandler() {
