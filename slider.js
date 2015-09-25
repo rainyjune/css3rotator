@@ -51,9 +51,15 @@
 
     function prepareElements() {
       slideContainer = element.find(mergedOptions.container); // Find the list
+      if (slideContainer.size() === 0) {
+        throw new Error('The container "' + mergedOptions.container + '" does not exist.');
+      }
       addSliderItems();
       slides = slideContainer.children();
       slideCount = slides.length;
+      if (slideCount === 0) {
+        throw new Error('There are no slides in the container.');
+      }
       if (mergedOptions.loop) {
         addDuplicatePages();
         slidePageIndex = 1;
