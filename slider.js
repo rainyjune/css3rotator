@@ -72,11 +72,6 @@
       element.addClass("rotatorRootElement"); // add class
       setSlideRootHeight();// Set aspect ratio
       slideContainer.addClass("rotatorWrapper").addClass("flex-it");
-      if (mergedOptions.slideMode === "horizontal") {
-        slideContainer.addClass("flex-row");
-      } else {
-        slideContainer.addClass("flex-col");
-      }
       slideDisplayCount = slideContainer.children().size();
       var slideContainerWidth = slideDisplayCount + "00%";
       var slideContainerHeight = slideDisplayCount + "00%";
@@ -87,9 +82,9 @@
         slideContainerHeight = mergedOptions.slideHeight * slideDisplayCount;
       }
       if (mergedOptions.slideMode === "horizontal") {
-        slideContainer.width(slideContainerWidth);
+        slideContainer.addClass("flex-row").width(slideContainerWidth);
       } else {
-        slideContainer.height(slideContainerHeight).width("100%");
+        slideContainer.addClass("flex-col").height(slideContainerHeight).width("100%");
       }
       slidePageWidth = slideContainer.children().eq(0).width();
       slidePageHeight = slideContainer.children().eq(0).height();
