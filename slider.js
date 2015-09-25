@@ -46,14 +46,7 @@
     init();
 
     function init() {
-      prepareElements();
-      addStyles();
-      
-      bindEvents();
-      setTimeout(function(){
-        setTransitionDuration();
-        setAutoPlay();
-      }, 0);
+      prepareElements() && addStyles() && bindEvents();
     }
 
     function prepareElements() {
@@ -66,6 +59,7 @@
         slidePageIndex = 1;
       }
       addIndicator();
+      return true;
     }
 
     function addStyles() {
@@ -104,6 +98,7 @@
           currentTranslateYValue = - mergedOptions.slideHeight;
         }
       }
+      return true;
     }
     
     function setAutoPlay() {
@@ -245,15 +240,20 @@
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
       $(element).on("tap", tapHandler);
       // If the slides are less than two, we don't add swipe event handlers.
-      if (slideCount < 2) return false;
-      $(element).on("swipe", enableTransitionDuration);
-      $(element).on("swipeUp", swipeUpHandler);
-      $(element).on("swipeDown", swipeDownHandler);
-      $(element).on("swipeLeft", swipeLeftHandler);
-      $(element).on("swipeRight", swipeRightHandler);
-      $(element).on("swipeStart", swipeStartHandler);
-      $(element).on("swipeCancel", swipeCancelMyHandler);
-      $(element).on("swipeProgress", swipeProgressHandler);
+      if (slideCount > 2) {
+        $(element).on("swipe", enableTransitionDuration);
+        $(element).on("swipeUp", swipeUpHandler);
+        $(element).on("swipeDown", swipeDownHandler);
+        $(element).on("swipeLeft", swipeLeftHandler);
+        $(element).on("swipeRight", swipeRightHandler);
+        $(element).on("swipeStart", swipeStartHandler);
+        $(element).on("swipeCancel", swipeCancelMyHandler);
+        $(element).on("swipeProgress", swipeProgressHandler);
+      }
+      setTimeout(function(){
+        setTransitionDuration();
+        setAutoPlay();
+      }, 0);
     }
 
     function swipeUpHandler(){
