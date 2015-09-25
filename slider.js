@@ -46,21 +46,36 @@
     init();
 
     function init() {
-      element.addClass("rotatorRootElement"); // add class
-      setSlideRootHeight();// Set aspect ratio
+      prepareElements();
+      addStyles();
+      
+      bindEvents();
+      setTimeout(function(){
+        setTransitionDuration();
+        setAutoPlay();
+      }, 0);
+    }
+
+    function prepareElements() {
       slideContainer = element.find(mergedOptions.container); // Find the list
-      slideContainer.addClass("rotatorWrapper").addClass("flex-it");
-      if (mergedOptions.slideMode === "horizontal") {
-        slideContainer.addClass("flex-row");
-      } else {
-        slideContainer.addClass("flex-col");
-      }
       addSliderItems();
       slides = slideContainer.children();
       slideCount = slides.length;
       if (mergedOptions.loop) {
         addDuplicatePages();
         slidePageIndex = 1;
+      }
+      addIndicator();
+    }
+
+    function addStyles() {
+      element.addClass("rotatorRootElement"); // add class
+      setSlideRootHeight();// Set aspect ratio
+      slideContainer.addClass("rotatorWrapper").addClass("flex-it");
+      if (mergedOptions.slideMode === "horizontal") {
+        slideContainer.addClass("flex-row");
+      } else {
+        slideContainer.addClass("flex-col");
       }
       slideDisplayCount = slideContainer.children().size();
       var slideContainerWidth = slideDisplayCount + "00%";
@@ -77,7 +92,6 @@
         slideContainer.height(slideContainerHeight);
         slideContainer.width("100%");
       }
-      
       slidePageWidth = slideContainer.children().eq(0).width();
       slidePageHeight = slideContainer.children().eq(0).height();
       
@@ -90,13 +104,6 @@
           currentTranslateYValue = - mergedOptions.slideHeight;
         }
       }
-      
-      addIndicator();
-      bindEvents();
-      setTimeout(function(){
-        setTransitionDuration();
-        setAutoPlay();
-      }, 0);
     }
     
     function setAutoPlay() {
