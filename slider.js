@@ -89,8 +89,7 @@
       if (mergedOptions.slideMode === "horizontal") {
         slideContainer.width(slideContainerWidth);
       } else {
-        slideContainer.height(slideContainerHeight);
-        slideContainer.width("100%");
+        slideContainer.height(slideContainerHeight).width("100%");
       }
       slidePageWidth = slideContainer.children().eq(0).width();
       slidePageHeight = slideContainer.children().eq(0).height();
