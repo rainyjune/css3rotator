@@ -235,6 +235,7 @@
     }
 
     function bindEvents() {
+      document.addEventListener('touchmove', preventDefault, false);
       new TouchObject(element[0]);
       $(window).on("resize", handleOrientationChange);
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
@@ -254,6 +255,10 @@
         setTransitionDuration();
         setAutoPlay();
       }, 0);
+    }
+
+    function preventDefault(e) {
+      e.preventDefault();
     }
 
     function swipeUpHandler(){
@@ -440,6 +445,7 @@
   
     Object.defineProperty(this, "dispose", {
       value: function() {
+        document.removeEventListener('touchmove', preventDefault, false);
         $(window).off("resize", handleOrientationChange);
         slideContainer.off(transitionEndEventName, transitionEndEventHandler);
         $(element).off("tap", tapHandler);
