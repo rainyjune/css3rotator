@@ -1,7 +1,7 @@
 /* global Zepto */
 
 (function(factory){
-  if ( typeof define === "function" && define.cmd ) {
+  if ( typeof define === "function" && (define.amd || define.cmd) ) {
     define(function(require, exports, module) {
       var $ = require('zepto');
       var TouchObject = require('touch');
