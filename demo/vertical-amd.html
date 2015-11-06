@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Flexbox test page</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../rotator.css" />
+    <style type="text/css">
+      #testDiv {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="testDiv">
+      <ul class="someclass">
+      </ul>
+    </div>
+    <p id="debug"></p>
+    
+    <ul style="display: none;" id="slider-item-template">
+      <li>
+        <a href="javascript:void(0);" data-href="#">
+          <h2></h2>
+        </a>
+      </li>
+    </ul>
+    <script data-main="./js/vertical-amd.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.js"></script>
+  </body>
+</html>
