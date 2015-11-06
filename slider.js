@@ -1,9 +1,18 @@
 /* global Zepto */
 
 (function(factory){
-  var $ = (typeof Zepto !== "undefined") ? Zepto : jQuery;
-  factory($);
-})(function ($) {
+  if ( typeof define === "function" && define.cmd ) {
+    define(function(require, exports, module) {
+      var $ = require('zepto');
+      var TouchObject = require('touch');
+      factory($, TouchObject);
+    });
+  } else {
+    var $ = (typeof Zepto !== "undefined") ? Zepto : jQuery;
+    var TouchObject = window.TouchObject;
+    factory($, TouchObject);
+  }
+})(function ($, TouchObject) {
   function Css3Rotator(element, options) {
     var defaults = {
       container: '.rotatorWrapper',
