@@ -5,7 +5,7 @@
     define(function(require, exports, module) {
       var $ = require('zepto');
       var TouchObject = require('touch');
-      factory($, TouchObject);
+      return factory($, TouchObject);
     });
   } else {
     var $ = (typeof Zepto !== "undefined") ? Zepto : jQuery;
@@ -568,4 +568,6 @@
       var rotatorObj = new Css3Rotator($(item), options);
     });
   };
+
+  return Css3Rotator;
 });
