@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AMD Test</title>
+    <link rel="stylesheet" href="./vendor/qunit.css">
+    <script src="./vendor/require.js"></script>
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <script>
+      var beginData;
+      require.config({
+        paths: {
+          'zepto': './vendor/zepto',
+          'qunit': './vendor/qunit',
+          'touch': './vendor/touch',
+          'slider': '../slider'
+        }
+      });
+
+      require(['qunit', './amd'], function(QUnit, tests){
+        QUnit.begin(function(data){
+          beginData = data;
+        });
+        tests();
+        QUnit.start();
+      });
+    </script>
+  </body>
+</html>
