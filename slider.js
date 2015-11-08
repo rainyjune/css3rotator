@@ -157,6 +157,9 @@
       } else {
         setTranslateYValue();
       }
+      // Trigger the slidechanged event, with an extra parameter to pass along to the event handler. 
+      // Pass current slide index to the event handler, note it's 1 based.
+      $(element).trigger('slidechanged', [pageIndex + 1]);
     }
     
     function autoPlay() {
