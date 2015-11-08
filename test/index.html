@@ -4,10 +4,25 @@
     <meta charset="utf-8">
     <title>QUnit Test</title>
     <link rel="stylesheet" href="./vendor/qunit.css">
+    <link rel="stylesheet" href="../rotator.css">
   </head>
   <body>
     <div id="qunit"></div>
     <div id="qunit-fixture"></div>
+    <div id="gallery">
+      <ul class="list">
+      </ul>
+    </div>
+    <ul style="display: none;" id="slider-item-template">
+      <li>
+        <a href="javascript:void(0);" data-href="#">
+          <h2></h2>
+        </a>
+      </li>
+    </ul>
+    <script src="./vendor/zepto.js"></script>
+    <script src="./vendor/touch.js"></script>
+    <script src="../slider.js"></script>
     <script src="./vendor/qunit.js"></script>
     <script src="tests.js"></script>
   </body>
