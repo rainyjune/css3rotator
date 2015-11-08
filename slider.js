@@ -128,11 +128,10 @@
     }
     
     function getSliderItemString(itemData) {
-      var itemDom = $("#slider-item-template").clone().find("li");
-      itemDom.css('background-image', 'url(' + itemData.img + ')');
-      itemDom.find("a").attr('data-href', itemData.link);
-      itemDom.find('h2').text(itemData.title);
-      return itemDom.prop('outerHTML');
+      var itemDom = $("<div>").css('background-image', 'url(' + itemData.img + ')'),
+          linkDom = $("<a>").attr({"href": "javascript:void(0);", "data-href": itemData.link}),
+          titleDom = $("<h2>").text(itemData.title);
+      return itemDom.append(linkDom.append(titleDom)).prop('outerHTML');
     }
     
     function addDuplicatePages() {
