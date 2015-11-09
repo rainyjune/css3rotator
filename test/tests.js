@@ -43,7 +43,9 @@ $(function(){
   QUnit.module("Dispose test");
 
   QUnit.test("Dispose the obj object", function(assert) {
-    assert.ok(true, "Always true");
+    assert.ok(obj.dispose, "Css3Rotator.dispose is defined");
+    obj.dispose();
+    alert("Please run getEventListeners(document.querySelector('#gallery')) in your console and make sure all handlers were removed.");
   });
   
 });
