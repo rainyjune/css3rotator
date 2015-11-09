@@ -54,6 +54,8 @@
     var slidePageWidth;
     var slidePageHeight;
     var autoPlayFinished;
+
+    var touchObj;
     
     init();
 
@@ -250,7 +252,7 @@
 
     function bindEvents() {
       document.addEventListener('touchmove', preventDefault, false);
-      new TouchObject(element[0]);
+      touchObj = new TouchObject(element[0]);
       $(window).on("resize", handleOrientationChange);
       slideContainer.on(transitionEndEventName, transitionEndEventHandler);
       $(element).on("tap", tapHandler);
@@ -471,6 +473,7 @@
         $(element).off("swipeStart", swipeStartHandler);
         $(element).off("swipeCancel", swipeCancelMyHandler);
         $(element).off("swipeProgress", swipeProgressHandler);
+        touchObj.dispose();
       }
     });
 
