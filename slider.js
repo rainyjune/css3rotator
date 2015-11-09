@@ -10,10 +10,13 @@
   } else {
     var $ = (typeof Zepto !== "undefined") ? Zepto : jQuery;
     var TouchObject = window.TouchObject;
-    factory($, TouchObject);
+    window.Css3Rotator = factory($, TouchObject);
   }
 })(function ($, TouchObject) {
   function Css3Rotator(element, options) {
+    element = typeof element === "string" ? $(element) : element;
+
+    var self = this;
     var defaults = {
       container: '.rotatorWrapper',
       transitionDuration: '5s',
@@ -159,7 +162,7 @@
       }
       // Trigger the slidechanged event, with an extra parameter to pass along to the event handler. 
       // Pass current slide index to the event handler, note it's 1 based.
-      $(element).trigger('slidechanged', [pageIndex + 1]);
+      self.dispatchEvent('slidechanged', [pageIndex + 1]);
     }
     
     function autoPlay() {
@@ -470,7 +473,21 @@
         $(element).off("swipeProgress", swipeProgressHandler);
       }
     });
+
+    Object.defineProperty(this, "element", {
+      value: element
+    });
   }
+
+  Css3Rotator.prototype.addEventListener = function(type, listener) {
+    this.element.on(type, listener);
+  };
+  Css3Rotator.prototype.removeEventListener = function(type, listener) {
+    this.element.off(type, listener);
+  };
+  Css3Rotator.prototype.dispatchEvent = function(type, details) {
+    this.element.trigger(type, details);
+  };
   
   /**
    * Get the transitionend event name.
