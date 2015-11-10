@@ -83,8 +83,29 @@ $(function(){
     assert.strictEqual(obj.count(), 2, "There are 2 pages in the slideshow.");
   });
   QUnit.test("previous Test", function(assert) {
+    assert.expect(2);
     assert.ok(typeof obj.previous === "function", "The previous method is defined"); 
-    //obj.previous();
+    var done = assert.async();
+    setTimeout(function(){
+      obj.previous();
+      setTimeout(function(){
+        assert.strictEqual(obj.currentPage, 1, "Changed to the first one.");
+        done();
+      }, 3000);
+    }, 3000);
+    //assert.strictEqual(obj.currentPage, 1, "The first element is active now.");
+  });
+  QUnit.test("next Test", function(assert) {
+    assert.expect(2);
+    assert.ok(typeof obj.next === "function", "The next method is defined"); 
+    var done = assert.async();
+    setTimeout(function(){
+      obj.next();
+      setTimeout(function(){
+        assert.strictEqual(obj.currentPage, 2, "Changed to the second one.");
+        done();
+      }, 3000);
+    }, 3000);
     //assert.strictEqual(obj.currentPage, 1, "The first element is active now.");
   });
   QUnit.test("Dispose the obj object", function(assert) {
