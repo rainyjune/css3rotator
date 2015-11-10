@@ -481,6 +481,10 @@
     Object.defineProperty(this, "element", {
       value: element
     });
+
+    this.count = function() {
+      return slideCount;
+    };
   }
 
   Css3Rotator.prototype.addEventListener = function(type, listener) {
