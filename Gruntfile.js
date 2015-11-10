@@ -3,7 +3,9 @@ module.exports = function(grunt) {
   grunt.initConfig({
     uglify: {
       options: {
-        mangle: false
+        mangle: {
+          except: ['require', 'exports', 'module']
+        }
       },
       slider: {
         files: {
