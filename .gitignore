@@ -1,3 +1,4 @@
 *.komodoproject
 *.swp
 /nbproject/
+/node_modules/
