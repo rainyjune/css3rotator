@@ -1,7 +1,7 @@
 define(function(require, exports,module) {
   require('zepto');
   var $ = window.jQuery || window.Zepto;
-  require('../../slider.js');
+  require('../../dist/js/slider.min.js');
   $("#testDiv").css3Rotator({
     container: '.someclass',
     transitionDuration: "0.3s",
