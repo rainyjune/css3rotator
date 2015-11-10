@@ -162,9 +162,9 @@
       } else {
         setTranslateYValue();
       }
-      // Trigger the slidechanged event, with an extra parameter to pass along to the event handler. 
+      // Trigger the pageselected event, with an extra parameter to pass along to the event handler. 
       // Pass current slide index to the event handler, note it's 1 based.
-      self.dispatchEvent('slidechanged', [pageIndex + 1]);
+      self.dispatchEvent('pageselected', [pageIndex + 1]);
     }
     
     function autoPlay() {
@@ -247,6 +247,7 @@
     function transitionEndEventHandler() {
       updateIndicatorStatus();
       setAutoPlay();
+      self.dispatchEvent('pagecompleted', [pageIndex + 1]);
       return false;
     }
 
