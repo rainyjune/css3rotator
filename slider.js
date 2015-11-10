@@ -156,6 +156,15 @@
     // or is in the middle of another navigation animation(TODO) 
     // @return {Boolean}
     this.previous = function() {
+      if (pageIndex === 0) return false;
+      prev();
+      return true;
+    };
+
+    this.next = function() {
+      if (pageIndex === slideCount - 1) return false;
+      next();
+      return true;
     };
     
     function next() {
