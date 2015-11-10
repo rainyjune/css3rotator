@@ -16,11 +16,14 @@ $(function(){
     ]
   });
 
+  /* Constructor */
   QUnit.module("Constructors Test");
   QUnit.test( "Constructor test", function( assert ) {
     assert.ok(typeof obj !== "undefined", "The obj variable is defined.");
   });
 
+
+  /* Events */
   QUnit.module("Events Tests");
   QUnit.test("onpageselected and onpagecompleted test", function(assert) {
     assert.expect(2);
@@ -42,19 +45,52 @@ $(function(){
 
   });
 
+  /* Properties */
   QUnit.module("Properties Test");
   QUnit.test("The element property", function(assert) {
     assert.equal(obj.element.attr("id"), "gallery", "The id of root element is #gallery");
     obj.element = $("body");
     assert.equal(obj.element.attr("id"), "gallery", "The root element is still #gallery");
   });
+  QUnit.test("currentPage test", function(assert) {
+    assert.strictEqual(obj.currentPage, 2, "The second page is the active one.");
+    // TODO 
+    var done = assert.async();
+    setTimeout(function(){
+      obj.currentPage = 1;
+      assert.strictEqual(obj.currentPage, 1, "The active page is changed to the first one."); 
+      done();
+    }, 3000);
+  });
 
-  QUnit.module("Dispose test");
 
+  /* Methods */
+  QUnit.module("Methods Tests");
+  QUnit.test("AddEventListener Test", function(assert) {
+    assert.ok(typeof obj.addEventListener === "function", "The addEventListener method is defined.");
+  });
+  QUnit.test("removeEventListener Test", function(assert) {
+    assert.ok(typeof obj.removeEventListener === "function", "The removeEventListener method is defined.");
+  });
+  QUnit.test("dispatchEvent Test", function(assert) {
+    assert.ok(typeof obj.dispatchEvent === "function", "The dispatchEvent method is defined.");
+  });
+  QUnit.test("AddEventListener Test", function(assert) {
+    assert.ok(typeof obj.addEventListener === "function", "The addEventListener method is defined.");
+  });
+  QUnit.test("Count Test", function(assert) {
+    assert.ok(typeof obj.count === "function", "The count method is defined"); 
+    assert.strictEqual(obj.count(), 2, "There are 2 pages in the slideshow.");
+  });
+  QUnit.test("previous Test", function(assert) {
+    assert.ok(typeof obj.previous === "function", "The previous method is defined"); 
+    //obj.previous();
+    //assert.strictEqual(obj.currentPage, 1, "The first element is active now.");
+  });
   QUnit.test("Dispose the obj object", function(assert) {
     assert.ok(obj.dispose, "Css3Rotator.dispose is defined");
     obj.dispose();
-    alert("Please run getEventListeners(document.querySelector('#gallery')) in your console and make sure all handlers were removed.");
+    //alert("Please run getEventListeners(document.querySelector('#gallery')) in your console and make sure all handlers were removed.");
   });
   
 });
