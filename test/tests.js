@@ -16,19 +16,28 @@ $(function(){
     ]
   });
 
-  QUnit.module("Load test");
-  QUnit.test( "Object test", function( assert ) {
-    assert.expect(2);
-
+  QUnit.module("Constructors Test");
+  QUnit.test( "Constructor test", function( assert ) {
     assert.ok(typeof obj !== "undefined", "The obj variable is defined.");
-    alert("Please swipe left and make sure the second was changed as the active one");
-    var done = assert.async();
-    obj.addEventListener("slidechanged", slidechangeHandler);
+  });
 
-    function slidechangeHandler(event, currentIndex) {
+  QUnit.module("Events Tests");
+  QUnit.test("onpageselected and onpagecompleted test", function(assert) {
+    assert.expect(2);
+    alert("Please swipe left and make sure the second was changed as the active one");
+    var done = assert.async(2);
+    obj.addEventListener("pageselected", fn1);
+    function fn1(event, currentIndex) {
       assert.strictEqual(currentIndex, 2, "The slide changed to the second one");
       done();
-      obj.removeEventListener("slidechanged", slidechangeHandler);
+      obj.removeEventListener("pageselected", fn1);
+    }
+
+    obj.addEventListener("pagecompleted", fn2);
+    function fn2(event, currentIndex) {
+      assert.strictEqual(currentIndex, 2, "The page transition finished.");
+      done();
+      obj.removeEventListener("pagecompleted", fn2);
     }
 
   });
