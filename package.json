@@ -1,0 +1,28 @@
+{
+  "name": "css3rotator",
+  "version": "0.0.1",
+  "description": "A jQuery/Zepto based mobile touch slider",
+  "keywords": ["slider"],
+  "homepage": "https://main-yuanprojects.rhcloud.com/css3rotator",
+  "bugs": {
+    "url": "https://github.com/rainyjune/css3rotator/issues"
+  },
+  "license": ["MIT"],
+  "author": {
+    "name": "Kang Chen",
+    "email": "rainyjune@live.cn",
+    "url": "https://main-yuanprojects.rhcloud.com/"
+  },
+  "files": ["dist", "src", "*.json", "*.js"],
+  "main": "dist/js/slider.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rainyjune/css3rotator.git"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-cssmin": "~0.14.0",
+    "grunt-contrib-uglify": "~0.10.0"
+  }
+}
