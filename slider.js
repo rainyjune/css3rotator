@@ -56,7 +56,6 @@
     var autoPlayFinished;
 
     var touchObj;
-    
     init();
 
     function init() {
@@ -150,6 +149,14 @@
     function prev() {
       slidePage(false);
     }
+
+    // Navigates to the previous item.
+    // True if the slideshow begins navigating to the previous page, 
+    // false if the slideshow is already at the first page 
+    // or is in the middle of another navigation animation(TODO) 
+    // @return {Boolean}
+    this.previous = function() {
+    };
     
     function next() {
       slidePage(true);
@@ -157,6 +164,10 @@
     
     function slidePage(isNext) {
       updateSlideIndex(isNext);
+      slideToPage();
+    }
+
+    function slideToPage() {
       if (mergedOptions.slideMode === "horizontal") {
         setTranslateXValue();
       } else {
@@ -481,6 +492,23 @@
     Object.defineProperty(this, "element", {
       value: element
     });
+
+    Object.defineProperty(this, "currentPage", {
+      get: function() {
+        return pageIndex + 1;
+      },
+      set: function(value) {
+        if (value <= 0 || value > slideCount) return ;
+        pageIndex = value - 1;
+        slidePageIndex = getSlidePageIndexByPageIndex(pageIndex);
+        slideToPage();
+      }
+    });
+
+    function getSlidePageIndexByPageIndex(pageIndex) {
+      if (!mergedOptions.loop) return pageIndex;
+      return pageIndex + 1;
+    }
 
     this.count = function() {
       return slideCount;
